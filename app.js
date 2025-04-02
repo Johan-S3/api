@@ -14,5 +14,5 @@ app.use("/categorias", categoriasRouter)
 app.use("/productos", productosRoutes)
 
 app.listen(3000, () => {
-  console.log("HOLA");
+  console.log("Ejecutando programa");
 });
