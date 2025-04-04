@@ -41,6 +41,17 @@ class CategoriaController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  static deleteCategoria = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const objCategoria = new Categoria();
+      const categorias = await objCategoria.delete(id);
+      res.status(201).json(categorias)
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 export default CategoriaController;

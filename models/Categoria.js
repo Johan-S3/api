@@ -34,7 +34,7 @@ class Categoria {
   async update(nombre, descripcion, id) {
     try {
       const [result] = await connection.query("UPDATE categorias SET nombre = ?,  descripcion = ? WHERE id = ?", [nombre, descripcion, id]);
-      if (result.effectedRows === 0) throw new Error("Categoria no encontrada");
+      if (result.affectedRows  === 0) throw new Error("Categoria no encontrada");
       return {
         id,
         nombre,
@@ -56,12 +56,32 @@ class Categoria {
       sql += ` WHERE id = ${id}`
 
       const [result] = await connection.query(sql);
-      if (result.effectedRows === 0) throw new Error("Categoria no encontrada");
+      if (result.affectedRows  === 0) {
+        return {
+          mensaje: "Categoria no encontrada"
+        }
+      }
       return {
         mensaje: "Categoria actualizada"
       }
     } catch (error) {
-      throw new Error("Error al actualizar la categoria")
+      throw new Error("Error al actualizar la categoria");
+    }
+  }
+
+  async delete(id){
+    try {
+      const [result] = await connection.query("DELETE FROM categorias WHERE id = ?", [id]);
+      if (result.affectedRows  === 0){
+        return {
+          mensaje: "Categoria no encontrada"
+        }
+      }
+      return {
+        mensaje: "Categoria eliminada "
+      }
+    } catch (error) {
+      throw new Error("Error al eliminar la categoria");
     }
   }
 }
