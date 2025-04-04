@@ -18,6 +18,26 @@ class Categoria {
     }
   }
 
+  async getById(id) {
+    try {
+      const [rows] = await connection.query("SELECT * FROM categorias WHERE id = ?", [id]);
+      if(rows.length > 0){
+        const [productos] = await connection.query("SELECT * from productos WHERE categoria_id = ?", [id]);
+        if(productos.length > 0){
+          const categoria = rows[0];
+          categoria.productos = productos
+          return categoria; 
+        }
+        return rows;
+      }
+      return{
+        mensaje: "Categoria no encontrada"
+      }
+    } catch (error) {
+      throw new Error("Error al obtener la categorías.")
+    }
+  }
+
   async create(nombre, descripcion) {
     try {
       const [result] = await connection.query("INSERT INTO categorias(nombre, descripcion) values (?,?)", [nombre, descripcion]);

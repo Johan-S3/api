@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get('/', CategoriaController.getAllCategorias);
 
+router.get('/:id', CategoriaController.getCategoria);
 
 router.post('/', validarCategoria, CategoriaController.createCategoria);
 

@@ -7,6 +7,13 @@ class CategoriaController {
     res.json(categorias);
   }
 
+  static getCategoria = async (req, res) => {
+    const { id } = req.params;
+    const objCategoria = new Categoria();
+    const categorias = await objCategoria.getById(id);
+    res.json(categorias);
+  }
+
   static createCategoria = async (req, res) => {
     try {
       const { nombre, descripcion } = req.body;
