@@ -41,6 +41,17 @@ class ProductoController{
       res.status(500).json({ error: error.message });
     }
   }
+
+  static deleteProducto = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const objProducto = new Producto();
+      const productos = await objProducto.delete(id);
+      res.status(201).json(productos)
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 export default ProductoController;

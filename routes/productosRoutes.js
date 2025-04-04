@@ -12,6 +12,9 @@ router.put('/:id', ProductoController.updateProducto);
 
 router.patch('/:id', ProductoController.updateParcialProducto);
 
+router.delete('/:id', ProductoController.deleteProducto);
+
+
 router.put('/:id', (req, res) => {
   console.log(req.body);
 });

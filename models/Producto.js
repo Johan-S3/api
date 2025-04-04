@@ -38,7 +38,11 @@ class Producto{
   async update(nombre, descripcion, precio, categoria_id, id) {
     try {
       const [result] = await connection.query("UPDATE productos SET nombre = ?,  descripcion = ?, precio = ?, categoria_id = ? WHERE id = ?", [nombre, descripcion, precio, categoria_id, id]);
-      if (result.effectedRows === 0) throw new Error("Categoria no encontrada");
+      if (result.affectedRows  === 0) {
+        return{
+          mensaje: "Producto no encontrado"
+        }
+      }
       return {
         id,
         nombre,
@@ -47,7 +51,7 @@ class Producto{
         categoria_id
       }
     } catch (error) {
-      throw new Error("Error al actualizar la categoria")
+      throw new Error("Error al actualizar el producto")
     }
   }
 
@@ -62,12 +66,32 @@ class Producto{
       sql += ` WHERE id = ${id}`
 
       const [result] = await connection.query(sql);
-      if (result.effectedRows === 0) throw new Error("Categoria no encontrada");
+      if (result.affectedRows  === 0) {
+        return{
+          mensaje: "Producto no encontrado"
+        }
+      }
       return {
-        mensaje: "Categoria actualizada"
+        mensaje: "Producto actualizado"
       }
     } catch (error) {
-      throw new Error("Error al actualizar la categoria")
+      throw new Error("Error al actualizar el producto")
+    }
+  }
+
+  async delete(id){
+    try {
+      const [result] = await connection.query("DELETE FROM productos WHERE id = ?", [id]);
+      if (result.affectedRows  === 0){
+        return {
+          mensaje: "Producto no encontrado"
+        }
+      }
+      return {
+        mensaje: "Producto eliminado"
+      }
+    } catch (error) {
+      throw new Error("Error al eliminar el producto");
     }
   }
 }
