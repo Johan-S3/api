@@ -69,8 +69,20 @@ class Categoria {
     }
   }
 
+  async relacionConProductos(categoriaId){
+    const [productos] = await connection.query("SELECT * FROM productos WHERE categoria_id = ?", [categoriaId]);
+    return productos.length > 0;
+  }
+
   async delete(id){
     try {
+      const categoriaRelacionado = await this.relacionConProductos(id);
+
+      if(categoriaRelacionado){
+        return{
+          mensaje: "No se puede eliminar la categoria, ya que está asociada a uno o más productos"
+        }
+      }
       const [result] = await connection.query("DELETE FROM categorias WHERE id = ?", [id]);
       if (result.affectedRows  === 0){
         return {
