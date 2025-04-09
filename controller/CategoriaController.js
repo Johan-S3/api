@@ -1,4 +1,5 @@
 import Categoria from "../models/Categoria.js";
+import CategoriasConProductos from "../services/CategoriaConProductos.js";
 
 class CategoriaController {
   static getAllCategorias = async (req, res) => {
@@ -9,9 +10,9 @@ class CategoriaController {
 
   static getCategoria = async (req, res) => {
     const { id } = req.params;
-    const objCategoria = new Categoria();
-    const categorias = await objCategoria.getById(id);
-    res.json(categorias);
+    const objServicio = new CategoriasConProductos();
+    const categoriasConProductos = await objServicio.getCategoriaWithProducto(id);
+    res.json(categoriasConProductos);
   }
 
   static createCategoria = async (req, res) => {

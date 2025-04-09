@@ -21,18 +21,7 @@ class Categoria {
   async getById(id) {
     try {
       const [rows] = await connection.query("SELECT * FROM categorias WHERE id = ?", [id]);
-      if(rows.length > 0){
-        const [productos] = await connection.query("SELECT * from productos WHERE categoria_id = ?", [id]);
-        if(productos.length > 0){
-          const categoria = rows[0];
-          categoria.productos = productos
-          return categoria; 
-        }
-        return rows;
-      }
-      return{
-        mensaje: "Categoria no encontrada"
-      }
+      return rows;
     } catch (error) {
       throw new Error("Error al obtener la categorías.")
     }

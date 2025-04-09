@@ -20,6 +20,20 @@ class Producto{
     }
   }
 
+  /**
+   * Metodo para obtener los productos relacionados con la id de la categoria recibida como parametro
+   * @param {} id 
+   * @returns {Array} Listo de los productos relacionados con esa categoria o un arreglo vacio si no se encuentran productos relacionados.
+   */
+  async getProductoByCategoriaId(id) {
+    try {
+      const [productos] = await connection.query("SELECT * from productos WHERE categoria_id = ?", [id]);
+      return productos;
+    } catch (error) {
+      throw new Error("Error al obtener los productos.")
+    }
+  }
+
   async create(nombre, descripcion, precio, categoria_id) {
     try {
       const [result] = await connection.query("INSERT INTO productos(nombre, descripcion, precio, categoria_id) values (?,?,?,?)", [nombre, descripcion, precio, categoria_id]);
