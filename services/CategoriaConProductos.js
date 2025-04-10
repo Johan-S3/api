@@ -1,5 +1,5 @@
-import Categoria from "../models/Categoria";
-import Producto from "../models/Producto";
+import Categoria from "../models/Categoria.js";
+import Producto from "../models/Producto.js";
 
 class CategoriasConProductos{
   categoria;
@@ -13,7 +13,7 @@ class CategoriasConProductos{
     const categoria = await this.categoria.getById(id);
     if(categoria.length > 0){
       const productos = await this.producto.getProductoByCategoriaId(id);
-      categoria.productos = productos
+      categoria[0].productos = productos
       return categoria; 
     }
     return{
@@ -21,3 +21,5 @@ class CategoriasConProductos{
     }
   }
 }
+
+export default CategoriasConProductos;
